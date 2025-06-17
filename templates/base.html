@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Сервис доставки{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="logo">
+        <a href="{% url 'delivery:logistics_dashboard' %}" style="color: #fff; text-decoration: none;">Сервис доставки</a>
+      </h1>
+      {% if request.user.is_authenticated %}
+      <div class="user-panel">
+        <span class="user-name">{{ request.user.username }}</span>
+        <form method="post" action="{% url 'logout' %}" class="logout-form">
+          {% csrf_token %}
+          <button type="submit">Выйти</button>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <hr>
+      <p>&copy; {% now "Y" %} Логистическая компания</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Импорт заказов</h2>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% if not mapping_form %}
+      {{ import_form.csv_file.label_tag }} {{ import_form.csv_file }}
+      <button type="submit">Загрузить и сопоставить поля</button>
+    {% else %}
+      {# Шаг 2: маппинг заголовков #}
+      {% for h in headers %}
+        <input type="hidden" name="headers" value="{{ h }}">
+      {% endfor %}
+
+      <table>
+        {% for field in mapping_form %}
+          <tr>
+            <td>{{ field.label_tag }}</td>
+            <td>{{ field }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+      <button type="submit" name="mapping_submitted" value="1">Импортировать</button>
+    {% endif %}
+  </form>
+
+  {% if errors %}
+    <ul class="errors">
+      {% for e in errors %}
+        <li>Строка {{ e.row }}: {{ e.errors|join:", " }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}

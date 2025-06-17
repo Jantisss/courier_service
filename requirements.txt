@@ -1,0 +1,15 @@
+numpy==1.24.0
+scikit-learn-extra
+requests
+django
+djangorestframework
+pytz
+pandas
+folium
+matplotlib
+ortools
+psycopg2-binary
+pytest
+pytest-django
+pytest-cov
+requests-mock

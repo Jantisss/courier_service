@@ -1,0 +1,224 @@
+
+  .login-container {
+    max-width: 360px;
+    margin: 4rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .login-container h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
+  }
+  .login-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-weight: 500;
+  }
+  .login-form input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .login-form button {
+    width: 100%;
+    padding: 0.75rem;
+    background: #0066cc;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  .login-form button:hover {
+    background: #005bb5;
+  }
+  .login-form .next-field {
+    display: none;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  .login-form input {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+  .login-form input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+  
+  .site-header {
+    background-color: #333;
+    color: #fff;
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+  }
+  .main-nav a {
+    color: #9cf;
+    margin-right: 1rem;
+    text-decoration: none;
+  }
+  .user-panel {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+  .user-name {
+    margin-right: 1rem;
+    color: #fff;
+  }
+  .logout-form button {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;     /* Убираем двойные границы */
+    margin-bottom: 1.5rem;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  /* Ячейки и заголовки */
+  table th,
+  table td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+  
+  /* Заголовочная строка */
+  table th {
+    background-color: #f4f4f4;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  /* Чередование фона строк */
+  table tr:nth-child(even) {
+    background-color: #fafafa;
+  }
+  
+  /* Hover-эффект для строк */
+  table tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  
+  /* Кнопки */
+  .btn, button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+  .btn:hover, button:hover {
+    background: #0056b3;
+  }
+  
+  /* Поля ввода и селекты */
+  input[type="text"],
+  input[type="number"] {
+    width: auto;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  
+  select {
+    width: auto;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus,
+  select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.2);
+    outline: none;
+  }
+  
+  /* ——— Карточки статистики ——— */
+  .stat-container {
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .stat-card {
+    flex: 1;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  .stat-card.ok {
+    border-color: #28a745;
+    background: #f5fff5;
+  }
+  .stat-card.alert {
+    border-color: #dc3545;
+    background: #fff5f5;
+  }
+  .stat-card .value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .stat-card .label {
+    font-size: 0.9rem;
+    color: #555;
+  }
+  
+  /* Текстовые сообщения */
+  .alert-text {
+    color: #dc3545;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .ok-text {
+    color: #28a745;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .alert-text {
+  color: #dc3545;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,83 @@
+{# templates/403.html #}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Доступ запрещён</title>
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 4rem;
+      background: #f8f8f8;
+    }
+    .container {
+      display: inline-block;
+      padding: 2rem;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    h1 { color: #c0392b; margin-bottom: 1rem; }
+    p { margin-bottom: 2rem; }
+    .user-panel {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .user-panel span {
+      margin-right: 1rem;
+      font-weight: bold;
+    }
+    .user-panel form,
+    .user-panel a.button {
+      margin: 0 0.5rem;
+    }
+    .logout-form button,
+    .button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background: #c0392b;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .logout-form button:hover,
+    .button:hover {
+      background: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>403 — Доступ запрещён</h1>
+    <p>{{ message|default:"У вас нет прав для просмотра этой страницы." }}</p>
+
+    {% if request.user.is_authenticated %}
+      <div class="user-panel">
+        <span>Вы вошли как {{ request.user.username }}</span>
+
+        {# Ссылка на маршрутный лист курьера #}
+        <a href="{{ back_url }}"
+           class="button">
+          Мой маршрут
+        </a>
+
+        {# Форма выхода #}
+        <form method="post" action="{% url 'logout' %}" class="logout-form">
+          {% csrf_token %}
+          <button type="submit">Выйти</button>
+        </form>
+      </div>
+    {% else %}
+      <p><a href="{% url 'login' %}">Войти</a>, чтобы попытаться снова.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

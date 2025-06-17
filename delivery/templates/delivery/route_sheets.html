@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load ru_plural %}
+{% block content %}
+  <h1>Маршрутные листы на {{ today|date:"d.m.Y" }}</h1>
+
+  {% for s in summaries %}
+    <section style="margin-bottom:2em;">
+
+      <h2>
+        Сводка по курьеру №{{ s.courier.id }}
+        (
+          <a href="{% url 'delivery:route_sheet_for_courier' s.courier.id %}">
+            {{ s.courier.fio }}
+          </a>
+        )
+      </h2>
+      <p><strong>Дата смены:</strong> {{ today|date:"d.m.Y" }}</p>
+      <p><strong>Время смены:</strong>
+         {{ s.shift_start|time:"H:i" }} — {{ s.shift_end|time:"H:i" }}
+      </p>
+      <p><strong>Кластер:</strong> 
+        {% if s.items %}
+          {{ s.items.0.order.cluster }}
+        {% else %}
+          &mdash;
+        {% endif %}</p>
+
+      <table border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th>№</th>
+            <th>Адрес доставки</th>
+            <th>Время доставки</th>
+            <th>Факт доставки</th>
+            <th>Статус</th>
+            <th>Комментарий</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in s.items %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ item.order.address }}</td>
+              <td>
+                {{ item.order.delivery_start|time:"H:i" }}
+                – {{ item.order.delivery_end|time:"H:i" }}
+              </td>
+              <td>
+                {% if item.delivered_at %}
+                  {{ item.delivered_at|time:"H:i" }}
+                {% else %}
+                  &mdash;
+                {% endif %}
+              </td>
+              <td>
+                {% if item.status == 'delivered' %}
+                  ✅ {{ item.get_status_display }}
+                {% elif item.status == 'late' %}
+                  ⚠️ {{ item.get_status_display }}
+                {% elif item.status == 'not_delivered' %}
+                  ❌ {{ item.get_status_display }}
+                {% else %}
+                  &mdash;
+                {% endif %}
+              </td>
+              <td>{{ item.courier_comment|default:"—" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h3>Итоги по курьеру:</h3>
+      <ul>
+        <li>Успешно доставлено: {{ s.delivered_count }} заказ{% if s.delivered_count|pluralize:"а,ов" %}ов{% endif %}</li>
+        <li>С задержкой: {{ s.delayed_count }} заказ{% if s.delayed_count|pluralize:"а,ов" %}ов{% endif %}</li>
+        <li>Не доставлено / возврат: {{ s.undelivered_count }} заказ{% if s.undelivered_count|pluralize:"а,ов" %}ов{% endif %}</li>
+        <li>
+          Среднее время доставки (для выполненных):
+          {{ s.avg_minutes }} {{ s.avg_minutes|ru_plural_minute }}
+        </li>
+      </ul>
+
+      {% if s.remarks %}
+        <h4>Замечания:</h4>
+        <ul>
+          {% for note in s.remarks %}
+            <li>{{ note }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </section>
+  {% empty %}
+    <p>Нет маршрутов на {{ today|date:"d.m.Y" }}.</p>
+  {% endfor %}
+
+{% endblock %}

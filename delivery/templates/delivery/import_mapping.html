@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Сопоставьте поля CSV и модели</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ mapping_form.as_p }}
+    <input type="hidden" name="mapping_submitted" value="1">
+    <button type="submit">Импортировать данные</button>
+  </form>
+{% endblock %}

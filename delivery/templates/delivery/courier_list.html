@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Курьеры</h2>
+<a class="btn" href="{% url 'delivery:courier_add' %}">Добавить курьера</a>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>ФИО</th>
+    <th>Контактный телефон</th>
+    <th>Грузоподъёмность (кг)</th>
+    <th>Объём багажника (м³)</th>
+    <th>Доступен</th>
+    <th>Действия</th>
+  </tr>
+  {% for courier in couriers %}
+    <tr>
+      <td>{{ courier.id }}</td>
+      <td>{{ courier.fio }}</td>
+      <td>{{ courier.contact }}</td>
+      <td>{{ courier.vehicle_capacity_weight }}</td>
+      <td>{{ courier.vehicle_capacity_volume }}</td>
+      <td>{{ courier.is_available|yesno:"Да,Нет" }}</td>
+      <td>
+        <a href="{% url 'delivery:courier_edit' courier.id %}">Редактировать</a> |
+        <a href="{% url 'delivery:route_sheet_for_courier' courier_id=courier.id %}">Маршрутный лист</a> |
+        <form action="{% url 'delivery:courier_delete' courier.id %}"
+              method="post"
+              style="display:inline;">
+          {% csrf_token %}
+          <button type="submit"
+                  onclick="return confirm('Вы уверены, что хотите удалить курьера {{ courier.fio }}?');">
+            Удалить
+          </button>
+        </form>
+      </td>
+    </tr>
+  {% empty %}
+    <tr><td colspan="9" style="text-align:center; padding:1rem; color:#777;">Нет курьеров</td></tr>
+  {% endfor %}
+  
+</table>
+{% endblock %}

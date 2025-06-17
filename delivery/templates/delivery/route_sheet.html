@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Маршрутный лист: {{ courier.fio }} ({{ courier.contact }})</h1>
+<p>Дата: {{ today|date:"d.m.Y" }}</p>
+
+<form method="post">
+  {% csrf_token %}
+  {{ formset.management_form }}
+
+  {% for cluster, rows in clusters.items %}
+    <h2>Кластер {{ cluster }}</h2>
+    <table border="1" cellpadding="5" cellspacing="0">
+      <thead>
+        <tr>
+          <th>№</th>
+          <th>Адрес доставки</th>
+          <th>Время доставки</th>
+          <th>Контакт получателя</th>
+          <th>Вес/Объём</th>
+          <th>Комментарий</th>
+          <th>Статус доставки</th>
+          <th>Комментарий курьера</th>
+          <th>Время фактической доставки</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+          {% with item=row.item form=row.form %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.order.address }}</td>
+            <td>{{ item.order.delivery_start|time:"H:i" }} – {{ item.order.delivery_end|time:"H:i" }}</td>
+            <td>{{ item.order.contact }}</td>
+            <td>{{ item.order.weight }} кг / {{ item.order.volume }} м³</td>
+            <td>{{ item.order.comment }}</td>
+
+            <td>{{ form.status }}</td>
+            <td>{{ form.courier_comment }}</td>
+
+            <td>
+              {% if item.delivered_at %}
+                {{ item.delivered_at|date:"H:i" }}
+              {% endif %}
+            </td>
+            {{ form.id }}  {# скрытый PK для formset #}
+          </tr>
+          {% endwith %}
+        {% endfor %}
+      </tbody>
+    </table>
+    <br>
+  {% endfor %}
+
+  <button type="submit">Сохранить</button>
+</form>
+<p><a href="{% url 'delivery:route_sheets' %}">← Назад к списку курьеров</a></p>
+
+<div style="width:100%; height: 70%; margin:1em 0;">
+  {{ map_html|safe }}
+</div>
+{% endblock %}
