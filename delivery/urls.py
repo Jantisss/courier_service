@@ -14,8 +14,7 @@ app_name = 'delivery'
 urlpatterns = [
     path('import/', import_orders, name='import_orders'),
     path('import/success/', lambda r: render(r, 'delivery/import_success.html'), name='import_success'),
-    # path('clusters/', clustered_map_VRPTM_ORTools, name='clusters_map'),
-    # path('map/', map_VRPTM, name='map_vrptw'),
+
     path('logistics/', LogisticsDashboardView.as_view(), name='logistics_dashboard'),
     path('logistics/order/<int:pk>/edit/', OrderUpdateView.as_view(), name='order_edit'),
     path('logistics/distribute/', distribute_orders, name='distribute_orders'),

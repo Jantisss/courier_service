@@ -2,13 +2,14 @@
 .venv/
 env/
 venv/
-venv2/
+myenv/
 
 # Игнорировать pycache и прочее
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.pytest_cache
 
 # Игнорировать файлы настроек IDE
 .vscode/
@@ -18,7 +19,7 @@ __pycache__/
 *.log
 
 # Игнорировать файлы базы данных (если есть)
-# *.sqlite3
+*.sqlite3
 
 # Игнорировать временные файлы
 *.swp

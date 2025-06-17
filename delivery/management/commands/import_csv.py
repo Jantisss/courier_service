@@ -5,7 +5,7 @@ from decimal import Decimal
 
 from django.core.management.base import BaseCommand, CommandError
 from delivery.models import Order
-from courier_service.delivery.services.clustering_solveVRPTW import geocode
+from delivery.services.clustering_solveVRPTW import geocode
 
 class Command(BaseCommand):
     help = "Импортирует заказы из CSV-файла"

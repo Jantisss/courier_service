@@ -7,7 +7,6 @@ from .services.clustering_solveVRPTW import add_route, geocluster
 import matplotlib.cm as cm
 import matplotlib.colors as mcolors
 import folium
-# get_distance_matrix
 import numpy as np
 import requests
 import json
@@ -60,57 +59,13 @@ def orders_to_dataframe(order_number = None, cluster = None):
             'delivery_start', 'delivery_end', 'weight', 'volume', 'contact', 'comment', 'cluster'
         )
     df = pd.DataFrame.from_records(qs)
-    # print(df)
-    # Преобразуем поля времени в datetime.time при необходимости
-    # df['delivery_start'] = pd.to_datetime(df['delivery_start']).dt.time
-    # df['delivery_end'] = pd.to_datetime(df['delivery_end']).dt.time
-    # Приведение типов
+    
     df['lat'] = df['lat'].astype(float)
     df['lon'] = df['lon'].astype(float)
     df['weight'] = df['weight'].astype(float)
     df['volume'] = df['volume'].astype(float)
     return df
 
-# def st_cluster_dashboard(request):
-#     orders = list(Order.objects.all())
-#     clusters = perform_st_clustering(orders, eps_space=0.005, eps_time=1.0, min_samples=3)
-#     for order, cluster in zip(orders, clusters):
-#         order.st_cluster = cluster
-#     context = {'orders': orders}
-#     return render(request, 'delivery/st_cluster_dashboard.html', context)
-
-# def auto_distance_matrix(request):
-#     """
-#     Этот endpoint автоматически подгружает адреса заказов из базы,
-#     преобразует их в координаты с помощью geocode, а затем отправляет POST-запрос
-#     к API 2GIS для получения матрицы расстояний.
-    
-#     Метод запроса: GET.
-#     Возвращает JSON с результатом запроса к внешнему API.
-#     """
-#     orders = Order.objects.all()
-#     points = []
-#     for order in orders:
-#         try:
-#             lat, lon = geocode(order.address)
-#             points.append({"lat": lat, "lon": lon})
-#         except Exception as e:
-#             # Логирование ошибки, адрес пропускается
-#             print(f"Ошибка геокодирования адреса '{order.address}': {e}")
-#             continue
-
-#     if not points:
-#         return JsonResponse({"error": "Не удалось получить координаты ни для одного заказа."}, status=404)
-    
-
-
-#     try:
-#         result = 0 #get_distance_matrix(points)
-#     except Exception as e:
-#         print("Ошибка декодирования JSON:", e)
-#         return JsonResponse({"error": "Ошибка декодирования JSON ответа."}, status=500)
-
-#     return JsonResponse(result, safe=False)
 
 def import_orders(request):
     import_form  = CSVUploadForm()

@@ -90,44 +90,18 @@ class Command(BaseCommand):
             # Составляем список строк Series для solve_vrptw
             cluster_df = orders_df.loc[oids]
             orders_cluster = [row for _, row in cluster_df.iterrows()]
-            # print("orders_cluster", orders_cluster)
             # Оптимизация VRPTW
             route = solve_hybrid_final(
                 orders_cluster,
-                # orders_df,
                 vehicle_capacity_weight=vcw,
                 vehicle_capacity_volume=vcv, 
-                # ALPHA=alpha, BETA=beta
+                ALPHA=alpha, BETA=beta
             )
-            # try:
-            #     route1 = solve_vrptw_distance(
-            #         orders_cluster,
-            #         # orders_df,
-            #         vehicle_capacity_weight=vcw,
-            #         vehicle_capacity_volume=vcv, 
-            #         # ALPHA=alpha, BETA=beta
-            #     )
-            #     print("route1",route1)
-            # except:
-            #     print("route1 - ошибка", Exception())
-            # try:
-            #     route2 = solve_vrptw_hybrid(
-            #         orders_cluster,
-            #         # orders_df,
-            #         vehicle_capacity_weight=vcw,
-            #         vehicle_capacity_volume=vcv, 
-            #         # ALPHA=alpha, BETA=beta
-            #     )
-            #     print("route2",route2)
-            # except:
-            #     print("route2 - ошибка", Exception())
 
             cluster_routes[cid] = route
             self.stdout.write(
                 self.style.SUCCESS(f'Кластер {cid}: маршрут {route}')
             )
-        print("cluster_routes", cluster_routes)
-        # Обновление clusters_map на основе актуальных кластеров в DataFrame после оптимизации
         # Приводим Series [cluster] к dict: {order_number: cluster}
         clusters_map = orders_df['cluster'].to_dict()
         # 6. Назначение курьеров после оптимизации
@@ -154,18 +128,11 @@ class Command(BaseCommand):
                 courier = cluster_to_courier.get(cid)
                 if not courier:
                     continue
-                
-                # # Удаляем старый маршрут 
-                # Route.objects.filter(
-                #     courier=courier,
-                #     cluster=cid,
-                # ).delete()
 
                 # Новый маршрут
                 route_obj = Route.objects.create(
                     courier=courier,
                     cluster=cid,
-
                 )
 
                 # Позиции маршрута в порядке sequence

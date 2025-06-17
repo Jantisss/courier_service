@@ -4,10 +4,6 @@ from django.urls import reverse,resolve
 from django.shortcuts import render
 from delivery.models import Courier
 
-
-
-# app/middleware.py
-
 class CourierOnlyMiddleware:
     """
     Блокирует всем курьерам доступ ко всем URL,
